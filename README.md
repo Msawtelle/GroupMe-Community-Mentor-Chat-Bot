@@ -1,8 +1,11 @@
 #GroupMe-Events-Bot
 
-I wanted to make a better way for my residents to know what is happening around campus. Thus this bot was born. Currently the bot responds to the following commands:\n
+I wanted to make a better way for my residents to know what is happening around campus. Thus this bot was born. Currently the bot responds to the following commands:
 
-command: !events or !events this week\n
+
+command: !events or !events this week
+
+
 groupme_bot_response: the events for the current week with date, title, location, and time
 
 
