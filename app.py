@@ -20,6 +20,8 @@ weekday_dictionary = {0:'Monday',
                       5:'Saturday',
                       6:'Sunday'
                   }
+
+inv_weekday_dict = {v: k for k, v in weekday_dictionary.items()}
 # Called whenever the app's callback URL receives a POST request
 # That'll happen every time a message is sent in the group
 @app.route('/', methods=['POST'])
@@ -55,7 +57,7 @@ def webhook():
 
                     if int(values[i][0]) in current_timeframe_days:
                         j = current_timeframe_days.index(int(values[i][0]))
-                        if values[i][1] == weekday_dictionary[current_timeframe_weekdays[j]]:
+                        if values[i][1] == inv_weekday_dict[current_timeframe_weekdays[j]]:
                             finalized_dates.append(psbl_dates[j])
                         else:
                             fixed_date = psbl_dates[j] + relativedelta(months=1)
@@ -151,7 +153,6 @@ def compare_dates(date_to_compare,date_tuple):
         return False
 def get_credentials():
     account_info = json.loads(os.getenv('GOOGLE_ACCOUNT_CREDENTIALS'))
-    print(account_info,type(account_info))
     SCOPE = ['https://www.googleapis.com/auth/spreadsheets.readonly','https://www.googleapis.com/auth/drive.readonly']
     credentials = service_account.Credentials.from_service_account_info(account_info, scopes=SCOPE)
     return credentials
