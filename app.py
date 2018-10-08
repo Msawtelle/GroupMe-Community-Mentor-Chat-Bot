@@ -24,6 +24,7 @@ possible_text = ['!events', '!events this week']
 # That'll happen every time a message is sent in the group
 @app.route('/', methods=['POST'])
 def webhook():
+<<<<<<< HEAD
     # 'message' is an object that represents a single GroupMe message.
     message = request.get_json()
     msg_txt = message['text'].lower()
@@ -75,6 +76,59 @@ def webhook():
                 bot_id = os.getenv('GROUPME_BOT_ID')
                 reply(final_msg,bot_id)
     return "ok", 200
+=======
+	# 'message' is an object that represents a single GroupMe message.
+	message = request.get_json()
+	msg_txt = message['text'].lower()
+	current_date = datetime.date.today()
+	current_month = current_date.strftime('%B')
+	for text in possible_text:
+		if text in msg_txt and not sender_is_bot(message):
+			if text == '!events' or '!events this week':
+				values = get_events_gsheets(current_month)
+				indices, date_ranges = get_weeks(values)
+				possible_indices = []
+				for i,d in enumerate(date_ranges):
+				    if compare_dates(current_date,d):
+				        current_week = d
+				        for j in range(indices[i]+1,indices[i+1]):
+				            possible_indices.append(j)
+				psbl_dates = possible_dates(current_week)
+				current_timeframe_days = [x.day for x in psbl_dates]
+				current_timeframe_weekdays = [weekday_dictionary[int(x.weekday())] for x in psbl_dates]
+				finalized_dates = []
+				data = []
+				for i in possible_indices:
+					if len(value[i]) <= 2:
+						data.append('Nothing scheduled on this date')
+					else:
+						time, title, loc, desc = values[i][2], values[i][3], values[i][4], values[i][5]
+						data.append((time, title, loc, desc))
+
+					if int(values[i][0]) in current_timeframe_dates:
+						j = current_timeframe_dates.index(int(values[i][0]))
+						if values[i][1] == weekday_dictionary[current_timeframe_weekdays[j]]:
+						    finalized_dates.append(psbl_dates[j])
+						else:
+							fixed_date = psbl_dates[j] + relativedelta(months=1)
+							if fixed_date.weekday == current_timeframe_weekdays[j]:
+								finalized_dates.append(fixed_date)
+				msgs = []
+				for date, others in zip(finalized_dates, data):
+					base_msg = 'Date: {}'.format(date)
+					if others == 'Nothing scheduled on this date':
+						msg = base_msg + '\n{}'.format(others)
+					else:
+						msg = base_msg + '\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}'.format(others[1],
+																											 others[0],
+																											 others[2],
+																											 others[3])
+					msgs.append(msg)
+				final_msg = '\n'.join(msgs)
+		                bot_id = os.getenv('GROUPME_BOT_ID')
+				reply(final_msg,bot_id)
+	return "ok", 200
+>>>>>>> 0fb2405b15b9ecadaff96b20d0f3ff86bf7673ae
 
 ################################################################################
 
