@@ -53,8 +53,8 @@ def webhook():
                         time, title, loc, desc = values[i][2], values[i][3], values[i][4], values[i][5]
                         data.append((time, title, loc, desc))
 
-                    if int(values[i][0]) in current_timeframe_dates:
-                        j = current_timeframe_dates.index(int(values[i][0]))
+                    if int(values[i][0]) in current_timeframe_days:
+                        j = current_timeframe_days.index(int(values[i][0]))
                         if values[i][1] == weekday_dictionary[current_timeframe_weekdays[j]]:
                             finalized_dates.append(psbl_dates[j])
                         else:
