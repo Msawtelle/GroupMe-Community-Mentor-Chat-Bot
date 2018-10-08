@@ -150,7 +150,7 @@ def compare_dates(date_to_compare,date_tuple):
     else:
         return False
 def get_credentials():
-    account_info = os.getenv('GOOGLE_ACCOUNT_CREDENTIALS')
+    account_info = json.loads(os.getenv('GOOGLE_ACCOUNT_CREDENTIALS'))
     print(account_info,type(account_info))
     SCOPE = ['https://www.googleapis.com/auth/spreadsheets.readonly','https://www.googleapis.com/auth/drive.readonly']
     credentials = service_account.Credentials.from_service_account_info(account_info, scopes=SCOPE)
