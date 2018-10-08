@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 from flask import Flask, request
 from google.oauth2 import service_account
 import googleapiclient.discovery
-from dateutil import relativedelta
+import dateutil.relativedelta as relativedelta
 
 app = Flask(__name__)
 
@@ -63,7 +63,7 @@ def webhook():
                         if values[i][1] == inv_weekday_dict[current_timeframe_weekdays[j]]:
                             finalized_dates.append(psbl_dates[j])
                         else:
-                            fixed_date = psbl_dates[j] + relativedelta(months=1)
+                            fixed_date = psbl_dates[j] + relativedelta.relativedelta(months=1)
                             if fixed_date.weekday == current_timeframe_weekdays[j]:
                                 finalized_dates.append(fixed_date)
                 msgs = []
