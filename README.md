@@ -1,3 +1,11 @@
-#CM-EVENTS-BOT
+#GroupMe-Events-Bot
 
-When you type !events or !events this week in a groupme that the bot is present in, the bot will respond with all the events for the week listed in the Okstate Reslife Google Spreadsheet
+I wanted to make a better way for my residents to know what is happening around campus. Thus this bot was born. Currently the bot responds to the following commands:
+command: !events or !events this week
+groupme_bot_response: the events for the current week with date, title, location, and time
+
+
+Inspirations:
+http://www.apnorton.com/blog/2017/02/28/How-I-wrote-a-Groupme-Chatbot-in-24-hours/
+
+https://developers.google.com/resources/api-libraries/documentation/sheets/v4/python/latest/index.html
