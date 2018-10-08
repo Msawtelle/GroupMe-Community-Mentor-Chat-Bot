@@ -45,6 +45,8 @@ def webhook():
                         for j in range(indices[i]+1,indices[i+1]):
                             possible_indices.append(j)
                 psbl_dates = possible_dates(current_week)
+                for x in psbl_dates:
+                    print(x,type(x))
                 current_timeframe_days = [x.day for x in psbl_dates]
                 current_timeframe_weekdays = [weekday_dictionary[int(x.weekday())] for x in psbl_dates]
                 finalized_dates = []
