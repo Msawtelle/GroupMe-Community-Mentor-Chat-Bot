@@ -178,10 +178,5 @@ def check_maintenance_hours(current_datetime):
         current_time = current_datetime.time()
         t1 = datetime.time(8,0)
         t2 = datetime.time(17,30)
-        if current_time >= t1 and current_time <= t2:
-            if current_datetime.weekday() in (0,1,2,3,4):
-                return True
-            else:
-                return False
-        else:
-            return False
+        if current_time >= t1 and current_time <= t2 and current_datetime.weekday() in [0,1,2,3,4]: return True
+        else:return False
