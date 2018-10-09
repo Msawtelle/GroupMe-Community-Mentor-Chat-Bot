@@ -89,6 +89,8 @@ def webhook():
                     msg = msg.format('The maintenance office is closed right now but if you have an emergency involving plumbing, \
                                     or A/C call the after hours number below.\nPhone Number: 405-744-7154.')
                 reply(msg,bot_id)
+
+    return 'ok'
 #METHODS
 def reply(msg,bot_id):
     url = "https://api.groupme.com/v3/bots/post"
@@ -173,8 +175,11 @@ def get_service(service_name='sheets', api_version='v4'):
 def check_maintenance_hours(current_datetime):
         #regular maintenace hours 8-5pm
         current_time = current_datetime.time()
-        if current_datetime.weekday() in (5,6):return False
         t1 = datetime.time(8,0)
         t2 = datetime.time(17,30)
-        if current_time >= t1 and current_time <= t2:return True
-        else: return False
+        if current_datetime.weekday() in (5,6):
+            return False
+        if current_time >= t1 and current_time <= t2:
+            return True
+        else:
+            return False
