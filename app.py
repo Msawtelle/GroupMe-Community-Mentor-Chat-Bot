@@ -78,7 +78,7 @@ def webhook():
                 for msg in msgs:
                     reply(msg,bot_id)
 
-            else text == '!maintenance' or '!maintenance number':
+            else:
                 msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_time = datetime.datetime.now().time()
                 if check_maintenance_hours(current_time):
