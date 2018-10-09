@@ -32,6 +32,7 @@ def webhook():
     current_month = current_date.strftime('%B')
     for text in keyword_phrases:
         if text in msg_txt and not sender_is_bot(message):
+            print(text)
             if text == '!events' or text == '!events this week':
                 values = get_events_gsheets(current_month)
                 indices, date_ranges = get_weeks(values)
