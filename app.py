@@ -176,6 +176,9 @@ def get_service(service_name='sheets', api_version='v4'):
 def check_maintenance_hours(current_datetime):
         #regular maintenace hours 8-5pm
         current_time = current_datetime.time()
+        print(current_datetime.weekday() in (5,6))
+        print(current_time >= t1 and current_time <=t2)
+        
         t1 = datetime.time(8,0)
         t2 = datetime.time(17,30)
         if current_datetime.weekday() in (5,6):
