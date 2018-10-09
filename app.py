@@ -68,7 +68,7 @@ def webhook():
                 for date, others in zip(finalized_dates, data):
                     if date < current_date:
                         continue
-                    base_msg = "Date: {}"".format(date.strftime('%m-%d-%Y'))
+                    base_msg = "Date: {}".format(date.strftime('%m-%d-%Y'))
                     if others == "Nothing scheduled on this date":
                         msg = base_msg + "\n{}".format(others)
                     else:
