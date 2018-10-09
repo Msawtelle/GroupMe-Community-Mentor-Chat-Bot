@@ -82,12 +82,11 @@ def webhook():
             else:
                 base_msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_datetime = datetime.datetime.now()
-                current_time = current_datetime.time()
                 print(current_time)
                 current_day = current_datetime.weekday()
-                t1 = current_datetime.replace(hour=8,minute=0)
-                t2 = current_datetime.replace(hour=17,minute=0)
-                if current_time >= t1 and current_time <= t2 and current_day in (0,1,2,3,4):
+                maintenace_open = current_datetime.replace(hour=8,minute=0)
+                maintenace_close = current_datetime.replace(hour=17,minute=0)
+                if current_datetime >= t1 and current_datetime <= t2 and current_day in (0,1,2,3,4):
                     msg = base_msg.format('The maintenance office is currently open. Call the number below to place a maintenance ticket.\nPhone:405-744-8510')
                 else:
                     msg = base_msg.format('The maintenance office is currently closed. If you have a flooding, plumbing, A/C emergency call the after hours number below.\nPhone:405-744-7154.')
