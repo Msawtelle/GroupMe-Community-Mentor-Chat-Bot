@@ -88,7 +88,7 @@ def reply(msg,bot_id):
         'text' : msg
     }
     response = requests.post(url, json=data)
-    print(response.status_code, response.reason)
+    print(response)
 # Send a message with an image attached in the groupchat
 def reply_with_image(msg, imgURL,bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
