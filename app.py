@@ -83,11 +83,11 @@ def webhook():
 # Send a message in the groupchat
 def reply(msg,bot_id):
     print('we made it to reply function')
-    print(bot_id,type(bot_id))
+    bot_id = f'"{bot_id}"'
     url = 'https://api.groupme.com/v3/bots/post'
     data = {
-        'bot_id'		: bot_id,
-        'text'			: msg
+        'text' : msg,
+        'bot_id' : bot_id
     }
     requests.post(url,params=data)
 
@@ -95,8 +95,8 @@ def reply(msg,bot_id):
 def reply_with_image(msg, imgURL,bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
     data = {
-        'bot_id'		: bot_id,
         'text'			: msg,
+        'bot_id'		: bot_id,
         'attachments'	: [{"type": "image", "url":imgURL}]
     }
     requests.post(url, params=data)
