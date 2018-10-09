@@ -82,7 +82,6 @@ def webhook():
             else:
                 base_msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_datetime = datetime.datetime.now()
-                print(current_time)
                 current_day = current_datetime.weekday()
                 maintenace_open = current_datetime.replace(hour=8,minute=0)
                 maintenace_close = current_datetime.replace(hour=17,minute=0)
