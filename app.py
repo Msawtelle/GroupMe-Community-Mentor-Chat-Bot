@@ -1,6 +1,7 @@
 # IMPORTS
 import os
 import datetime
+import pytz
 import json
 from urllib.parse import urlencode
 import requests
@@ -83,8 +84,8 @@ def webhook():
                 base_msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_datetime = datetime.datetime.now()
                 current_day = current_datetime.weekday()
-                maintenace_open = current_datetime.replace(hour=8,minute=0)
-                maintenace_close = current_datetime.replace(hour=17,minute=0)
+                maintenace_open = current_datetime.replace(hour=13,minute=0)#these are utc time 8am and 5pm us central tz
+                maintenace_close = current_datetime.replace(hour=22,minute=0)
                 print(current_datetime,maintenace_open,maintenace_close)
                 if current_datetime >= maintenace_open and current_datetime <= maintenace_close and current_day in (0,1,2,3,4):
                     msg = base_msg.format('The maintenance office is currently open. Call the number below to place a maintenance ticket.\nPhone:405-744-8510')
