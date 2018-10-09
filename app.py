@@ -87,8 +87,9 @@ def reply(msg,bot_id):
         'text' : msg,
         'bot_id' : bot_id
     }
-    requests.post(url,json=data)
-    print('made it to the end of ')
+    headers = {'content-type': 'application/json'}
+    response = requests.post(url,data=json.dumps(data),headers=headers)
+    print(response.status_code, response.reason)
 # Send a message with an image attached in the groupchat
 def reply_with_image(msg, imgURL,bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
@@ -97,8 +98,9 @@ def reply_with_image(msg, imgURL,bot_id):
         'bot_id'		: bot_id,
         'attachments'	: [{"type": "image", "url":imgURL}]
     }
-    requests.post(url, params=data)
-
+    headers = {'content-type': 'application/json'}
+    response = requests.post(url,data=json.dumps(data),headers=headers)
+    print(response.status_code, response.reason)
 # Checks whether the message sender is a bot
 def sender_is_bot(message):
     return message['sender_type'] == "bot"
