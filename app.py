@@ -88,7 +88,6 @@ def webhook():
                     msg.format('The maintenance office is closed right now but if you have an emergency involving plumbing, \
                                     or A/C call the after hours number below.\nPhone Number: 405-744-7154.')
                 reply(msg,bot_id)
-
 #METHODS
 def reply(msg,bot_id):
     url = "https://api.groupme.com/v3/bots/post"
