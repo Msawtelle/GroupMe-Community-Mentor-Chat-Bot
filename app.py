@@ -1,7 +1,6 @@
 # IMPORTS
 import os
 import datetime
-import pytz
 import json
 from urllib.parse import urlencode
 import requests
