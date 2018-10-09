@@ -68,11 +68,11 @@ def webhook():
                 for date, others in zip(finalized_dates, data):
                     if date < current_date:
                         continue
-                    base_msg = 'Date: {}'.format(date.strftime('%m-%d-%Y'))
-                    if others == 'Nothing scheduled on this date':
-                        msg = base_msg + '\n{}'.format(others)
+                    base_msg = "Date: {}"".format(date.strftime('%m-%d-%Y'))
+                    if others == "Nothing scheduled on this date":
+                        msg = base_msg + "\n{}".format(others)
                     else:
-                        msg = base_msg + '\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}\n'.format(others[2],others[0],others[1],others[3])
+                        msg = base_msg + "\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}\n".format(others[2],others[0],others[1],others[3])
 
                     msgs.append(msg)
 
@@ -80,16 +80,16 @@ def webhook():
                     reply(msg,bot_id)
 
             else:
-                base_msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
+                base_msg = "Sorry to hear you are having maintenance issues. :(\n{}"
                 current_datetime = datetime.datetime.now()
                 current_day = current_datetime.weekday()
                 maintenace_open = current_datetime.replace(hour=13,minute=0)#these are utc time 8am and 5pm us central tz
                 maintenace_close = current_datetime.replace(hour=22,minute=0)
                 print(current_datetime,maintenace_open,maintenace_close)
                 if current_datetime >= maintenace_open and current_datetime <= maintenace_close and current_day in (0,1,2,3,4):
-                    msg = base_msg.format('The maintenance office is currently open. Call the number below to place a maintenance ticket.\nPhone:405-744-8510')
+                    msg = base_msg.format("The maintenance office is currently open. Call the number below to place a maintenance ticket.\nPhone:405-744-8510")
                 else:
-                    msg = base_msg.format('The maintenance office is currently closed. If you have a flooding, plumbing, A/C emergency call the after hours number below.\nPhone:405-744-7154.')
+                    msg = base_msg.format("The maintenance office is currently closed. If you have a flooding, plumbing, A/C emergency call the after hours number below.\nPhone:405-744-7154.")
 
                 reply(msg,bot_id)
 
