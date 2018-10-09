@@ -77,7 +77,7 @@ def webhook():
                     msgs.append(msg)
                 final_msg = "\n".join(msgs)
                 bot_id = os.getenv('GROUPME_BOT_ID')
-                reply(final_msg,bot_id)
+                reply('hello',bot_id)
     return "ok", 200
 #methods used
 # Send a message in the groupchat
