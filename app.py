@@ -174,4 +174,4 @@ def check_maintenance_hours(current_time):
         #regular maintenace hours 8-5pm
         t1 = datetime.time(8,0)
         t2 = datetime.time(17,30)
-        return current_time >= begin_time and current_time <= end_time
+        return current_time >= t1 and current_time <= t2
