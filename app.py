@@ -31,7 +31,6 @@ def webhook():
     # 'message' is an object that represents a single GroupMe message.
     message = request.get_json()
     msg_txt = message['text'].lower()
-    print(msg_txt)
     current_date = datetime.date.today()
     current_month = current_date.strftime('%B')
     for text in possible_text:
@@ -77,7 +76,6 @@ def webhook():
                                                                                                              others[3])
                     msgs.append(msg)
                 final_msg = '\n'.join(msgs)
-                print(final_msg)
                 bot_id = os.getenv('GROUPME_BOT_ID')
                 reply(final_msg,bot_id)
     return "ok", 200
@@ -85,6 +83,7 @@ def webhook():
 # Send a message in the groupchat
 def reply(msg,bot_id):
     print('we made it to reply function')
+    print(bot_id,type(bot_id))
     url = 'https://api.groupme.com/v3/bots/post'
     data = {
         'bot_id'		: bot_id,
