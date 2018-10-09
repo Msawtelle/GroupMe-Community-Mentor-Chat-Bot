@@ -84,8 +84,8 @@ def webhook():
 def reply(msg,bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
     data = {
-        'text' : msg,
         'bot_id' : bot_id
+        'text' : msg,
     }
     headers = {'content-type': 'application/json'}
     response = requests.post(url,data=json.dumps(data),headers=headers)
@@ -94,8 +94,8 @@ def reply(msg,bot_id):
 def reply_with_image(msg, imgURL,bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
     data = {
-        'text'			: msg,
         'bot_id'		: bot_id,
+        'text'			: msg,
         'attachments'	: [{"type": "image", "url":imgURL}]
     }
     headers = {'content-type': 'application/json'}
