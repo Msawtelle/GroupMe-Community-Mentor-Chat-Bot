@@ -83,9 +83,10 @@ def webhook():
                 base_msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_datetime = datetime.datetime.now()
                 current_time = current_datetime.time()
+                print(current_time)
                 current_day = current_datetime.weekday()
-                t1 = datetime.time(8,0)
-                t2 = datetime.time(17,0)
+                t1 = current_datetime.replace(hour=8,minute=0)
+                t2 = current_datetime.replace(hour=17,minute=0)
                 if current_time >= t1 and current_time <= t2 and current_day in (0,1,2,3,4):
                     msg = base_msg.format('The maintenance office is currently open. Call the number below to place a maintenance ticket.\nPhone:405-744-8510')
                 else:
@@ -94,7 +95,7 @@ def webhook():
                 reply(msg,bot_id)
 
     return 'ok'
-    
+
 #METHODS
 def reply(msg,bot_id):
     url = "https://api.groupme.com/v3/bots/post"
