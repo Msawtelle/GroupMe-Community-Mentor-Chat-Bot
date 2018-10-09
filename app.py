@@ -76,6 +76,8 @@ def webhook():
                                                                                                              others[3])
                     msgs.append(msg)
                 final_msg = "\n".join(msgs)
+                print(len(final_msg))
+                print(final_msg)
                 bot_id = os.getenv('GROUPME_BOT_ID')
                 reply('hello',bot_id)
     return "ok", 200
