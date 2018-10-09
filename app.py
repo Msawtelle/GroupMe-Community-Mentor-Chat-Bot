@@ -144,7 +144,7 @@ def possible_dates(dates):
     psbl_dates = []
     delta = dates[1]-dates[0]
     for i in range(delta.days+1):
-        psbl_dates.append((dates[0]+datetime.timedelta(i)).date())
+        psbl_dates.append(dates[0]+datetime.timedelta(i))
     return psbl_dates
 
 def compare_dates(date_to_compare,date_tuple):
