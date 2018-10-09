@@ -83,10 +83,10 @@ def webhook():
                 msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_time = datetime.datetime.now().time()
                 if check_maintenance_hours(current_time):
-                    msg.format('It is within normal maintenance hours. Call the number below to file a maintenace ticket.\nPhone Number: 405-744-8510.')
+                    msg = msg.format('It is within normal maintenance hours. Call the number below to file a maintenace ticket.\nPhone Number: 405-744-8510.')
 
                 else:
-                    msg.format('The maintenance office is closed right now but if you have an emergency involving plumbing, \
+                    msg = msg.format('The maintenance office is closed right now but if you have an emergency involving plumbing, \
                                     or A/C call the after hours number below.\nPhone Number: 405-744-7154.')
                 reply(msg,bot_id)
 #METHODS
