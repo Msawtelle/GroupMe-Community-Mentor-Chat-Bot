@@ -82,7 +82,7 @@ def webhook():
             else:
                 msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_datetime = datetime.datetime.now()
-                if not check_maintenance_hours(current_datetime):
+                if check_maintenance_hours(current_datetime) is True:
                     msg = msg.format('It is within normal maintenance hours. Call the number below to file a maintenace ticket.\nPhone Number: 405-744-8510.')
                     reply(msg,bot_id)
 
@@ -181,5 +181,7 @@ def check_maintenance_hours(current_datetime):
         if current_time >= t1 and current_time <= t2:
             if current_datetime.weekday() in (0,1,2,3,4):
                 return True
+            else:
+                return False
         else:
             return False
