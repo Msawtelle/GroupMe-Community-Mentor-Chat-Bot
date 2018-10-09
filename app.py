@@ -11,8 +11,8 @@ import dateutil.relativedelta as relativedelta
 
 app = Flask(__name__)
 
+keyword_phrases = ['!events','!events this week','!maintenance','!maintenance number', '!cm']
 
-possible_text = ['!events', '!events this week']
 weekday_dictionary = {0:'Monday',
                       1:'Tuesday',
                       2:'Wednesday',
@@ -20,20 +20,17 @@ weekday_dictionary = {0:'Monday',
                       4:'Friday',
                       5:'Saturday',
                       6:'Sunday'
-                  }
-
+                      }
 inv_weekday_dict = {v: k for k, v in weekday_dictionary.items()}
-# Called whenever the app's callback URL receives a POST request
-# That'll happen every time a message is sent in the group
+bot_id = os.getenv('GROUPME_BOT_ID')
+
 @app.route('/', methods=['POST'])
 def webhook():
-
-    # 'message' is an object that represents a single GroupMe message.
     message = request.get_json()
     msg_txt = message['text'].lower()
     current_date = datetime.date.today()
     current_month = current_date.strftime('%B')
-    for text in possible_text:
+    for text in keyword_phrases:
         if text in msg_txt and not sender_is_bot(message):
             if text == '!events' or '!events this week':
                 values = get_events_gsheets(current_month)
@@ -64,7 +61,9 @@ def webhook():
                             fixed_date = psbl_dates[j] + relativedelta.relativedelta(months=1)
                             if fixed_date.weekday == current_timeframe_weekdays[j]:
                                 finalized_dates.append(fixed_date)
+
                 msgs = []
+
                 for date, others in zip(finalized_dates, data):
                     if date < current_date:
                         continue
@@ -72,29 +71,33 @@ def webhook():
                     if others == 'Nothing scheduled on this date':
                         msg = base_msg + '\n{}'.format(others)
                     else:
-                        msg = base_msg + '\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}\n'.format(others[2],
-                                                                                                             others[0],
-                                                                                                             others[1],
-                                                                                                             others[3])
+                        msg = base_msg + '\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}\n'.format(others[2],others[0],others[1],others[3])
+
                     msgs.append(msg)
 
-                bot_id = os.getenv('GROUPME_BOT_ID')
                 for msg in msgs:
                     reply(msg,bot_id)
-    return "ok", 200
-#methods used
-# Send a message in the groupchat
+
+            if text == '!maintenance' or '!maintenance number':
+                msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
+                current_time = datetime.datetime.now().time()
+                if check_maintenance_hours(current_time):
+                    msg.format('It is within normal maintenance hours. Call the number below to file a maintenace ticket.\nPhone Number: 405-744-8510.')
+
+                else:
+                    msg.format('The maintenance office is closed right now but if you have an emergency involving plumbing, \
+                                    or A/C call the after hours number below.\nPhone Number: 405-744-7154.')
+                reply(msg,bot_id)
+
+#METHODS
 def reply(msg,bot_id):
     url = "https://api.groupme.com/v3/bots/post"
     data = {
         "bot_id" : bot_id,
         "text": msg
     }
-    # headers = {"content-type" : "application/json"}
-    # response = requests.post(url, data=json.dumps(data), headers=headers)
     response = requests.post(url, json=data)
-    print(response)
-# Send a message with an image attached in the groupchat
+
 def reply_with_image(msg, imgURL,bot_id):
     url = 'https://api.groupme.com/v3/bots/post'
     data = {
@@ -103,9 +106,8 @@ def reply_with_image(msg, imgURL,bot_id):
         "attachments"	: [{"type": "image", "url":imgURL}]
     }
 
-    response = requests.post(url,params=data)
-    print(response.status_code, response.reason)
-# Checks whether the message sender is a bot
+    response = requests.post(url, json=data)
+
 def sender_is_bot(message):
     return message['sender_type'] == "bot"
 
@@ -156,12 +158,20 @@ def compare_dates(date_to_compare,date_tuple):
         return True
     else:
         return False
+
 def get_credentials():
     account_info = json.loads(os.getenv('GOOGLE_ACCOUNT_CREDENTIALS'))
     SCOPE = ['https://www.googleapis.com/auth/spreadsheets.readonly','https://www.googleapis.com/auth/drive.readonly']
     credentials = service_account.Credentials.from_service_account_info(account_info, scopes=SCOPE)
     return credentials
+
 def get_service(service_name='sheets', api_version='v4'):
     credentials = get_credentials()
     service = googleapiclient.discovery.build(service_name, api_version, credentials=credentials)
     return service
+
+def check_maintenance_hours(current_time):
+        #regular maintenace hours 8-5pm
+        t1 = datetime.time(8,0)
+        t2 = datetime.time(17,30)
+        return current_time >= begin_time and current_time <= end_time
