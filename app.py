@@ -3,7 +3,7 @@ import os
 import datetime
 import json
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+import requests
 from flask import Flask, request
 from google.oauth2 import service_account
 import googleapiclient.discovery
@@ -87,8 +87,8 @@ def reply(msg,bot_id):
         'bot_id'		: bot_id,
         'text'			: msg
     }
-    request = Request(url, urlencode(data).encode())
-    json = urlopen(request).read().decode()
+    jsondata = json.dumps(data)
+    requests.post(url,json=jsondata)
 
 # Send a message with an image attached in the groupchat
 def reply_with_image(msg, imgURL,bot_id):
@@ -98,8 +98,8 @@ def reply_with_image(msg, imgURL,bot_id):
         'text'			: msg,
         'attachments'	: [{"type": "image", "url":imgURL}]
     }
-    request = Request(url, urlencode(data).encode())
-    json = urlopen(request).read().decode()
+    jsondata = json.dumps(data)
+    requests.post(url,json=jsondata)
 
 # Checks whether the message sender is a bot
 def sender_is_bot(message):
