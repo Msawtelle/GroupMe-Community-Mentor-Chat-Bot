@@ -84,11 +84,12 @@ def webhook():
                 current_datetime = datetime.datetime.now()
                 if check_maintenance_hours(current_datetime):
                     msg = msg.format('It is within normal maintenance hours. Call the number below to file a maintenace ticket.\nPhone Number: 405-744-8510.')
+                    reply(msg,bot_id)
 
                 else:
                     msg = msg.format('The maintenance office is closed right now but if you have an emergency involving plumbing, \
                                     or A/C call the after hours number below.\nPhone Number: 405-744-7154.')
-                reply(msg,bot_id)
+                    reply(msg,bot_id)
 
     return 'ok'
 #METHODS
@@ -174,8 +175,12 @@ def get_service(service_name='sheets', api_version='v4'):
 
 def check_maintenance_hours(current_datetime):
         #regular maintenace hours 8-5pm
-        print('starting maintenance')
         current_time = current_datetime.time()
         t1 = datetime.time(8,0)
         t2 = datetime.time(17,30)
-        return current_time >= t1 and current_time <= t2 and current_datetime.weekday() in [0,1,2,3,4]
+        if current_datetime.weekday() in (5,6):
+            return False
+        if current_time >= t1 and current_time <= t2:
+            return True
+        else:
+            return False
