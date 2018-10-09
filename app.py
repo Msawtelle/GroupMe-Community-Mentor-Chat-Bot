@@ -70,16 +70,15 @@ def webhook():
                     if others == 'Nothing scheduled on this date':
                         msg = base_msg + '\n{}'.format(others)
                     else:
-                        msg = base_msg + '\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}'.format(others[1],
+                        msg = base_msg + '\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}\n'.format(others[1],
                                                                                                              others[0],
                                                                                                              others[2],
                                                                                                              others[3])
                     msgs.append(msg)
-                final_msg = "\n".join(msgs)
-                print(len(final_msg))
-                print(final_msg)
+
                 bot_id = os.getenv('GROUPME_BOT_ID')
-                reply('hello',bot_id)
+                for msg in msgs:
+                    reply(msg,bot_id)
     return "ok", 200
 #methods used
 # Send a message in the groupchat
