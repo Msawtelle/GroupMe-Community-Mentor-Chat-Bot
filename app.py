@@ -11,7 +11,7 @@ import dateutil.relativedelta as relativedelta
 
 app = Flask(__name__)
 
-keyword_phrases = ['!events','!events this week','!maintenance','!maintenance number', '!cm']
+keyword_phrases = ['!events','!events this week','!maintenance','!maintenance number']
 
 weekday_dictionary = {0:'Monday',
                       1:'Tuesday',
@@ -32,7 +32,7 @@ def webhook():
     current_month = current_date.strftime('%B')
     for text in keyword_phrases:
         if text in msg_txt and not sender_is_bot(message):
-            if text == '!events' or '!events this week':
+            if text == '!events' or text == '!events this week':
                 values = get_events_gsheets(current_month)
                 indices, date_ranges = get_weeks(values)
                 possible_indices = []
