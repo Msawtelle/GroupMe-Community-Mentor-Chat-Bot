@@ -90,8 +90,9 @@ def reply(msg,bot_id):
         "bot_id" : bot_id,
         "text": msg
     }
-    headers = {"content-type" : "application/json"}
-    response = requests.post(url, data=json.dumps(data), headers=headers)
+    # headers = {"content-type" : "application/json"}
+    # response = requests.post(url, data=json.dumps(data), headers=headers)
+    response = requests.post(url, json=data)
     print(response)
 # Send a message with an image attached in the groupchat
 def reply_with_image(msg, imgURL,bot_id):
