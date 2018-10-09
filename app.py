@@ -87,8 +87,7 @@ def reply(msg,bot_id):
         'bot_id' : bot_id,
         'text' : msg
     }
-    headers = {'content-type': 'application/json'}
-    response = requests.post(url,data=json.dumps(data),headers=headers)
+    response = requests.post(url, params=data)
     print(response.status_code, response.reason)
 # Send a message with an image attached in the groupchat
 def reply_with_image(msg, imgURL,bot_id):
@@ -98,8 +97,8 @@ def reply_with_image(msg, imgURL,bot_id):
         'text'			: msg,
         'attachments'	: [{"type": "image", "url":imgURL}]
     }
-    headers = {'content-type': 'application/json'}
-    response = requests.post(url,data=json.dumps(data),headers=headers)
+
+    response = requests.post(url,params=data)
     print(response.status_code, response.reason)
 # Checks whether the message sender is a bot
 def sender_is_bot(message):
