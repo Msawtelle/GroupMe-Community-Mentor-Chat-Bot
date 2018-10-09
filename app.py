@@ -75,7 +75,7 @@ def webhook():
                                                                                                              others[2],
                                                                                                              others[3])
                     msgs.append(msg)
-                final_msg = '\n'.join(msgs)
+                final_msg = "\n".join(msgs)
                 bot_id = os.getenv('GROUPME_BOT_ID')
                 reply(final_msg,bot_id)
     return "ok", 200
@@ -87,7 +87,7 @@ def reply(msg,bot_id):
         "bot_id" : bot_id,
         "text": msg
     }
-    response = requests.post(url, params=data)
+    response = requests.post(url, json=data)
     print(response.url)
     print(response)
 # Send a message with an image attached in the groupchat
