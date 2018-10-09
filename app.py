@@ -80,16 +80,16 @@ def webhook():
                     reply(msg,bot_id)
 
             else:
-                msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
+                base_msg = 'Sorry to hear you are having maintenance issues. :(\n{}'
                 current_datetime = datetime.datetime.now()
-                if check_maintenance_hours(current_datetime) is True:
-                    msg = msg.format('It is within normal maintenance hours. Call the number below to file a maintenace ticket.\nPhone Number: 405-744-8510.')
-                    reply(msg,bot_id)
-
+                current_time = current_datetime.time()
+                current_day = current_datetime.weekday()
+                t1 = datetime.time(8,0)
+                t2 = datetime.time(17,0)
+                if current_time >= t1 and current_time <= t2 and current day in (0,1,2,3,4):
+                    msg = msg.format('The maintenance office is currently open. Call the number below to place a maintenance ticket.\nPhone:405-744-8510')
                 else:
-                    msg = msg.format('The maintenance office is closed right now but if you have an emergency involving plumbing, \
-                                    or A/C call the after hours number below.\nPhone Number: 405-744-7154.')
-                    reply(msg,bot_id)
+                    msg = msg.format('The maintenance office is currently closed. If you have a flooding, plumbing, A/C emergency call the after hours number below.\nPhone:405-744-7154.')
 
     return 'ok'
 #METHODS
@@ -172,11 +172,3 @@ def get_service(service_name='sheets', api_version='v4'):
     credentials = get_credentials()
     service = googleapiclient.discovery.build(service_name, api_version, credentials=credentials)
     return service
-
-def check_maintenance_hours(current_datetime):
-        #regular maintenace hours 8-5pm
-        current_time = current_datetime.time()
-        t1 = datetime.time(8,0)
-        t2 = datetime.time(17,30)
-        if current_time >= t1 and current_time <= t2 and current_datetime.weekday() in [0,1,2,3,4]: return True
-        else:return False
