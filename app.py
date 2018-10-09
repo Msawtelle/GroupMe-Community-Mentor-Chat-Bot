@@ -45,8 +45,6 @@ def webhook():
                         for j in range(indices[i]+1,indices[i+1]):
                             possible_indices.append(j)
                 psbl_dates = possible_dates(current_week)
-                for x in psbl_dates:
-                    print(x,type(x))
                 current_timeframe_days = [x.day for x in psbl_dates]
                 current_timeframe_weekdays = [weekday_dictionary[int(x.weekday())] for x in psbl_dates]
                 finalized_dates = []
@@ -60,7 +58,7 @@ def webhook():
 
                     if int(values[i][0]) in current_timeframe_days:
                         j = current_timeframe_days.index(int(values[i][0]))
-                        if values[i][1] == inv_weekday_dict[current_timeframe_weekdays[j]]:
+                        if values[i][1] in [current_timeframe_weekdays[j]]:
                             finalized_dates.append(psbl_dates[j])
                         else:
                             fixed_date = psbl_dates[j] + relativedelta.relativedelta(months=1)
@@ -68,7 +66,7 @@ def webhook():
                                 finalized_dates.append(fixed_date)
                 msgs = []
                 for date, others in zip(finalized_dates, data):
-                    base_msg = 'Date: {}'.format(date)
+                    base_msg = 'Date: {}'.format(date.strftime('%m-%d-%Y'))
                     if others == 'Nothing scheduled on this date':
                         msg = base_msg + '\n{}'.format(others)
                     else:
