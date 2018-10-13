@@ -3,10 +3,12 @@
 I wanted to make a better way for my residents to know what is happening around campus. Thus this bot was born. Currently the bot responds to the following commands:
 
 
-command: !events, !events this week
+command: !events, !events this week \n
+
 groupme_bot_response: the events for the current week with date, title, location, and time
 
-command: !maintenance
+command: !maintenance \n
+
 groupme_bot_response: check if the maintenance office is open at the current time. Send the phone number for regular hours. If weekend or after 5pm send after-hours emergency number.
 
 Inspirations:
