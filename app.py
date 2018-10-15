@@ -49,7 +49,7 @@ def webhook():
                 data = []
                 for i in possible_indices:
                     print(values[i])
-                    if len(values[i] <= 2 or not values:
+                    if len(values[i]) <= 2 or not values:
                         data.append('Nothing scheduled on this date')
                     else:
                         time, loc, title, desc = values[i][2], values[i][3], values[i][4], values[i][5]
