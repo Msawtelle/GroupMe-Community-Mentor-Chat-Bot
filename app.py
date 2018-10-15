@@ -55,7 +55,7 @@ def webhook():
                         try:
                             time, loc, title, desc = values[i][2], values[i][3], values[i][4], values[i][5]
                             data.append((time, loc, title,desc))
-                        else:
+                        except:
                             time, loc, title, = values[i][2], values[i][3],values[i][4]
                             data.append((time, loc, title))
 
