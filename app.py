@@ -48,7 +48,8 @@ def webhook():
                 finalized_dates = []
                 data = []
                 for i in possible_indices:
-                    if len(values[i]) <= 3 or not values:
+                    print(values[i])
+                    if len(values[i][2]) is "" or not values:
                         data.append('Nothing scheduled on this date')
                     else:
                         time, loc, title, desc = values[i][2], values[i][3], values[i][4], values[i][5]
