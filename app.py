@@ -52,8 +52,13 @@ def webhook():
                     if len(values[i]) <= 2 or not values:
                         data.append('Nothing scheduled on this date')
                     else:
-                        time, loc, title, desc = values[i][2], values[i][3], values[i][4], values[i][5]
-                        data.append((time, loc, title,desc))
+                        try:
+                            time, loc, title, desc = values[i][2], values[i][3], values[i][4], values[i][5]
+                            data.append((time, loc, title,desc))
+                        else:
+                            time, loc, title, = values[i][2], values[i][3],values[i][4]
+                            data.append((time, loc, title))
+
 
                     if int(values[i][0]) in current_timeframe_days:
                         j = current_timeframe_days.index(int(values[i][0]))
@@ -72,8 +77,10 @@ def webhook():
                     base_msg = "Date: {}".format(date.strftime('%m-%d-%Y'))
                     if others == "Nothing scheduled on this date":
                         msg = base_msg + "\n{}".format(others)
-                    else:
+                    elif len(others) == 4:
                         msg = base_msg + "\nTitle: {}\nTime: {}\nLocation: {}\nDescription: {}\n".format(others[2],others[0],others[1],others[3])
+                    else:
+                        msg = base_msg + "\nTitle: {}\nTime: {}\nLocation: {}\n".format(others[2],others[0],others[1])
 
                     msgs.append(msg)
 
